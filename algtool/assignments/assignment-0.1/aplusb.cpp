@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main(){
+int main() {
   int a = 0;
   int b = 0;
   int sum = 0;
@@ -11,6 +11,7 @@ int main(){
     std::cout << sum;
     return 0;
   }
-  std::cout << "Error: either a or b is less than 0 or greater than 9" << std::endl;
+  std::cout << "Error: either a or b is less than 0 or greater than 9"
+            << std::endl;
   return -1;
 }
