@@ -10,28 +10,23 @@ int find_best_item(const vector<uint32_t> & w, const vector<uint32_t> & v) {
   double unit_value = 0.0;
   double max_unit_value = 0.0;
   for (int i = 0; i < w.size(); ++i) {
-    if (w[i]) {
       unit_value = static_cast<double>(v[i])/static_cast<double>(w[i]);
       if ( max_unit_value < unit_value ) {
         max_unit_value = unit_value;
         best_item = i;
       }
-    }
   }
   return best_item;
 }
 
-double get_optimal_value(uint32_t capacity,
+double get_optimal_value(uint32_t W,
                          vector<uint32_t> w,
                          vector<uint32_t> v) {
   double value = 0.0;
-  uint32_t W = capacity;
 
   while (w.size() > 0 && W != 0) {
     // 1. Find best item
     int best_item = find_best_item(w, v);
-    if (w[best_item] == 0)
-      continue;
 
     double best_unit_value =
         static_cast<double>(v[best_item]) / static_cast<double>(w[best_item]);
@@ -51,7 +46,7 @@ double get_optimal_value(uint32_t capacity,
 }
 
 int main() {
-  int n;
+  uint64_t n;
   uint64_t capacity;
   std::cin >> n >> capacity;
 
@@ -60,14 +55,17 @@ int main() {
   if (capacity > 2000000)
     return -1;
 
-  vector<uint32_t> values(n);
-  vector<uint32_t> weights(n);
+  vector<uint32_t> values;
+  vector<uint32_t> weights;
+  uint32_t v, w;
   for (int i = 0; i < n; i++) {
-    if (values[i] < 0 || values[i] > 2000000)
-      return -1;
-    if (weights[i] < 0 || weights[i] > 2000000)
-      return -1;
-    std::cin >> values[i] >> weights[i];
+    std::cin >> v >> w;
+    // 2016 Economy and Physical conditions: we have a cost limits and gravity.
+    if (v >= 0 && v <= 2000000 &&
+        w > 0 && w <= 2000000 ) {
+      values.push_back(v);
+      weights.push_back(w);
+    }
   }
 
   double optimal_value = get_optimal_value(capacity, weights, values);
